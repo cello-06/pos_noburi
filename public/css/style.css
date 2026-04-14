@@ -1,0 +1,489 @@
+/* ============================================
+   NoBuRi POS - Main Stylesheet
+   ============================================ */
+
+:root {
+  --noburi-primary: #BA7517;
+  --noburi-dark: #854F0B;
+  --noburi-light: #FAEEDA;
+  --sidebar-width: 240px;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: #f5f5f0;
+  color: #2c2c2a;
+}
+
+/* ─── Layout ─────────────────────────────── */
+.layout-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  padding: 24px;
+  min-height: 100vh;
+}
+
+/* ─── Sidebar ────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-width);
+  background: #fff;
+  border-right: 1px solid #e8e6e0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid #f0ede6;
+}
+
+.brand-logo {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--noburi-primary);
+  letter-spacing: -0.5px;
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-bottom: 1px solid #f0ede6;
+  background: #faf9f7;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--noburi-light);
+  color: var(--noburi-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.user-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2c2c2a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-role {
+  font-size: 11px;
+  color: #888;
+}
+
+.sidebar-nav {
+  padding: 12px 12px;
+  flex: 1;
+}
+
+.sidebar-footer {
+  padding: 12px;
+  border-top: 1px solid #f0ede6;
+}
+
+.nav-section-title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #aaa;
+  padding: 0 8px;
+  margin-bottom: 4px;
+}
+
+.nav-link-custom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: #555;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.15s;
+  margin-bottom: 2px;
+}
+
+.nav-link-custom:hover {
+  background: #faf9f7;
+  color: #2c2c2a;
+}
+
+.nav-link-custom.active {
+  background: var(--noburi-light);
+  color: var(--noburi-primary);
+  font-weight: 600;
+}
+
+.nav-link-custom i {
+  font-size: 16px;
+  width: 18px;
+  text-align: center;
+}
+
+/* ─── Page Header ────────────────────────── */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c2c2a;
+  margin: 0;
+}
+
+/* ─── Cards ──────────────────────────────── */
+.card-noburi {
+  background: #fff;
+  border: 1px solid #e8e6e0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.stat-card {
+  background: #faf9f7;
+  border: 1px solid #e8e6e0;
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2c2c2a;
+}
+
+/* ─── Kasir Layout ───────────────────────── */
+.kasir-layout {
+  display: flex;
+  gap: 16px;
+  height: calc(100vh - 100px);
+}
+
+.menu-section {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.order-section {
+  width: 300px;
+  background: #fff;
+  border: 1px solid #e8e6e0;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.btn-filter {
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid #e0ddd8;
+  background: #fff;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-filter:hover {
+  border-color: var(--noburi-primary);
+  color: var(--noburi-primary);
+}
+
+.btn-filter.active {
+  background: var(--noburi-primary);
+  border-color: var(--noburi-primary);
+  color: #fff;
+}
+
+/* Menu grid */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.menu-card {
+  background: #fff;
+  border: 1px solid #e8e6e0;
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+}
+
+.menu-card:hover:not(.out-of-stock) {
+  border-color: var(--noburi-primary);
+  box-shadow: 0 2px 8px rgba(186, 117, 23, 0.12);
+  transform: translateY(-1px);
+}
+
+.menu-card.out-of-stock {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.menu-card-body {
+  width: 100%;
+}
+
+.menu-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2c2c2a;
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+
+.menu-kategori {
+  font-size: 11px;
+  color: #aaa;
+  margin-bottom: 6px;
+}
+
+.menu-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--noburi-primary);
+  margin-bottom: 6px;
+}
+
+.menu-stok {
+  font-size: 11px;
+}
+
+/* Order panel */
+.order-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f0ede6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 16px;
+}
+
+.order-empty {
+  text-align: center;
+  padding: 32px 0;
+}
+
+.cart-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #f5f4f0;
+}
+
+.cart-item-name {
+  font-size: 13px;
+  color: #2c2c2a;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.cart-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qty-btn {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  transition: all 0.1s;
+}
+
+.qty-btn:hover {
+  border-color: var(--noburi-primary);
+  color: var(--noburi-primary);
+}
+
+.qty-num {
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
+}
+
+.cart-subtotal {
+  margin-left: auto;
+  font-size: 13px;
+  color: #555;
+}
+
+.order-footer {
+  padding: 14px 16px;
+  border-top: 1px solid #f0ede6;
+}
+
+.total-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+.total-label {
+  font-size: 13px;
+  color: #888;
+}
+
+.total-amount {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2c2c2a;
+}
+
+.change-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* ─── Buttons ────────────────────────────── */
+.btn-noburi {
+  background-color: var(--noburi-primary);
+  border-color: var(--noburi-primary);
+  color: #fff;
+}
+
+.btn-noburi:hover {
+  background-color: var(--noburi-dark);
+  border-color: var(--noburi-dark);
+  color: #fff;
+}
+
+.btn-xs {
+  padding: 3px 8px;
+  font-size: 12px;
+  border-radius: 6px;
+}
+
+.bg-noburi {
+  background-color: var(--noburi-primary) !important;
+}
+
+/* ─── Login Page ─────────────────────────── */
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f0;
+}
+
+.login-card {
+  background: #fff;
+  border: 1px solid #e8e6e0;
+  border-radius: 16px;
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.login-logo {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--noburi-primary);
+  letter-spacing: -1px;
+}
+
+/* ─── Struk ──────────────────────────────── */
+.struk {
+  font-size: 13px;
+}
+
+.struk-brand {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--noburi-primary);
+  margin-bottom: 2px;
+}
+
+/* ─── Scrollbar ──────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #ccc; }
+
+/* ─── Responsive ─────────────────────────── */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 16px;
+  }
+  .sidebar {
+    display: none;
+  }
+  .kasir-layout {
+    flex-direction: column;
+    height: auto;
+  }
+  .order-section {
+    width: 100%;
+  }
+}

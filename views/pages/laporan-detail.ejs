@@ -1,0 +1,67 @@
+<%- include('../partial/head') %>
+<div class="layout-wrapper">
+  <%- include('../partial/navbar') %>
+  <div class="main-content">
+    <div class="page-header">
+      <h4 class="page-title"><i class="bi bi-receipt me-2"></i>Detail Transaksi</h4>
+      <a href="/laporan" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Kembali
+      </a>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="card-noburi">
+          <h6 class="fw-semibold mb-3">Informasi Transaksi</h6>
+          <table class="table table-borderless table-sm mb-0">
+            <tr><td class="text-muted">ID Transaksi</td><td><code><%= trx.TransaksiID %></code></td></tr>
+            <tr><td class="text-muted">Tanggal</td><td><%= new Date(trx.TanggalTransaksi).toLocaleString('id-ID') %></td></tr>
+            <tr><td class="text-muted">Kasir</td><td><%= trx.NamaUser %></td></tr>
+            <tr><td class="text-muted">Metode Bayar</td><td><span class="badge bg-secondary"><%= trx.MetodeBayar %></span></td></tr>
+            <tr><td class="text-muted">Status</td><td><span class="badge <%= trx.Status === 'Selesai' ? 'bg-success' : 'bg-danger' %>"><%= trx.Status %></span></td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card-noburi">
+          <h6 class="fw-semibold mb-3">Ringkasan Pembayaran</h6>
+          <table class="table table-borderless table-sm mb-0">
+            <tr><td class="text-muted">Total Harga</td><td class="fw-semibold">Rp <%= parseInt(trx.TotalHarga).toLocaleString('id-ID') %></td></tr>
+            <tr><td class="text-muted">Dibayar</td><td>Rp <%= parseInt(trx.TotalBayar).toLocaleString('id-ID') %></td></tr>
+            <tr><td class="text-muted">Kembalian</td><td class="text-success">Rp <%= parseInt(trx.Kembalian).toLocaleString('id-ID') %></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-noburi mt-3">
+      <h6 class="fw-semibold mb-3">Detail Item</h6>
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Nama Menu</th>
+            <th class="text-center">Qty</th>
+            <th class="text-end">Harga Satuan</th>
+            <th class="text-end">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% details.forEach(d => { %>
+          <tr>
+            <td><%= d.NamaMenu %></td>
+            <td class="text-center"><%= d.Qty %></td>
+            <td class="text-end">Rp <%= parseInt(d.Harga).toLocaleString('id-ID') %></td>
+            <td class="text-end fw-semibold">Rp <%= parseInt(d.Subtotal).toLocaleString('id-ID') %></td>
+          </tr>
+          <% }) %>
+          <tr class="table-light">
+            <td colspan="3" class="text-end fw-bold">Total</td>
+            <td class="text-end fw-bold">Rp <%= parseInt(trx.TotalHarga).toLocaleString('id-ID') %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body></html>

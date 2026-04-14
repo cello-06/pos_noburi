@@ -1,0 +1,44 @@
+<div class="sidebar shadow-sm">
+  <div class="sidebar-brand">
+    <span class="brand-logo">NoBuRi</span>
+    <small class="brand-sub">POS System</small>
+  </div>
+
+  <div class="sidebar-user">
+    <div class="user-avatar"><%= user.NamaUser.charAt(0).toUpperCase() %></div>
+    <div>
+      <div class="user-name"><%= user.NamaUser %></div>
+      <div class="user-role"><%= user.NamaRole %></div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav mt-3">
+    <div class="nav-section-title">Transaksi</div>
+    <a href="/kasir" class="nav-link-custom <%= locals.title && locals.title.includes('Kasir') ? 'active' : '' %>">
+      <i class="bi bi-cash-register"></i> Kasir
+    </a>
+
+    <div class="nav-section-title mt-3">Produk</div>
+    <a href="/menu" class="nav-link-custom <%= locals.title && locals.title.includes('Menu') ? 'active' : '' %>">
+      <i class="bi bi-grid"></i> Menu & Stok
+    </a>
+
+    <div class="nav-section-title mt-3">Laporan</div>
+    <a href="/laporan" class="nav-link-custom <%= locals.title && locals.title.includes('Laporan') ? 'active' : '' %>">
+      <i class="bi bi-bar-chart-line"></i> Laporan Penjualan
+    </a>
+
+    <% if (user.RoleID === 'Admin' || user.RoleID === 'Owner') { %>
+    <div class="nav-section-title mt-3">Pengaturan</div>
+    <a href="/user" class="nav-link-custom <%= locals.title && locals.title.includes('User') ? 'active' : '' %>">
+      <i class="bi bi-people"></i> Manajemen User
+    </a>
+    <% } %>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="/logout" class="nav-link-custom text-danger">
+      <i class="bi bi-box-arrow-left"></i> Logout
+    </a>
+  </div>
+</div>

@@ -1,0 +1,151 @@
+<%- include('../partial/head') %>
+<div class="layout-wrapper">
+  <%- include('../partial/navbar') %>
+  <div class="main-content">
+    <div class="page-header">
+      <h4 class="page-title"><i class="bi bi-grid me-2"></i>Menu & Stok</h4>
+      <% if (user.RoleID === 'Admin' || user.RoleID === 'Owner') { %>
+        <a href="/menu/tambah" class="btn btn-noburi btn-sm">
+          <i class="bi bi-plus-lg me-1"></i> Tambah Menu
+        </a>
+      <% } %>
+    </div>
+
+    <%- include('../partial/flash') %>
+
+    <!-- Summary stok -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="stat-card">
+          <div class="stat-label">Total Menu</div>
+          <div class="stat-value"><%= menus.length %></div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stat-card">
+          <div class="stat-label">Menu Tersedia</div>
+          <div class="stat-value text-success"><%= menus.filter(m => m.Status === 'Tersedia').length %></div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stat-card">
+          <div class="stat-label">Menu Habis</div>
+          <div class="stat-value text-danger"><%= menus.filter(m => m.Status === 'Habis').length %></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-noburi">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Nama Menu</th>
+            <th>Kategori</th>
+            <th>Harga</th>
+            <th>Stok</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% menus.forEach(m => { %>
+          <tr>
+            <td><code><%= m.MenuID %></code></td>
+            <td>
+              <div class="fw-semibold"><%= m.NamaMenu %></div>
+              <small class="text-muted"><%= m.Deskripsi ? m.Deskripsi.substring(0, 60) + '...' : '-' %></small>
+            </td>
+            <td><span class="badge bg-secondary"><%= m.NamaKategori %></span></td>
+            <td>Rp <%= parseInt(m.Harga).toLocaleString('id-ID') %></td>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <span class="<%= m.Stok <= 5 ? 'text-danger fw-bold' : '' %>"><%= m.Stok %></span>
+                <button class="btn btn-xs btn-outline-secondary" onclick="openUpdateStok('<%= m.MenuID %>', '<%= m.NamaMenu %>', <%= m.Stok %>)">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+              </div>
+            </td>
+            <td>
+              <% if (m.Status === 'Habis') { %>
+                <span class="badge bg-danger">Habis</span>
+              <% } else if (m.Stok <= 5) { %>
+                <span class="badge bg-warning text-dark">Hampir Habis</span>
+              <% } else { %>
+                <span class="badge bg-success">Tersedia</span>
+              <% } %>
+            </td>
+            <td>
+              <% if (user.RoleID === 'Admin' || user.RoleID === 'Owner') { %>
+              <div class="d-flex gap-1">
+                <a href="/menu/edit/<%= m.MenuID %>" class="btn btn-xs btn-outline-primary">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <form action="/menu/hapus/<%= m.MenuID %>?_method=DELETE" method="POST"
+                      onsubmit="return confirm('Hapus menu <%= m.NamaMenu %>?')">
+                  <button type="submit" class="btn btn-xs btn-outline-danger">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </form>
+              </div>
+              <% } else { %>
+                <span class="text-muted small">-</span>
+              <% } %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Update Stok -->
+<div class="modal fade" id="modalStok" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">Update Stok</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted small mb-2" id="modal-menu-nama"></p>
+        <label class="form-label">Stok Baru</label>
+        <input type="number" class="form-control" id="modal-stok-baru" min="0">
+        <label class="form-label mt-2">Keterangan</label>
+        <input type="text" class="form-control" id="modal-keterangan" placeholder="Contoh: Restock dari supplier">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-noburi btn-sm" onclick="submitUpdateStok()">Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let currentMenuID = '';
+
+function openUpdateStok(id, nama, stok) {
+  currentMenuID = id;
+  document.getElementById('modal-menu-nama').textContent = nama;
+  document.getElementById('modal-stok-baru').value = stok;
+  document.getElementById('modal-keterangan').value = '';
+  new bootstrap.Modal(document.getElementById('modalStok')).show();
+}
+
+async function submitUpdateStok() {
+  const stokBaru = document.getElementById('modal-stok-baru').value;
+  const keterangan = document.getElementById('modal-keterangan').value;
+  const res = await fetch('/menu/update-stok/' + currentMenuID, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ stokBaru, keterangan })
+  });
+  const data = await res.json();
+  if (data.success) location.reload();
+  else alert('Gagal update stok: ' + data.message);
+}
+</script>
+</body></html>
